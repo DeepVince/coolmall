@@ -73,7 +73,9 @@
           </li>
         </ul>
       </div>
-
+      <div class="current-comp">
+        <component :is="currentComponent"></component>
+      </div>
     </div>
   </div>
 </template>
@@ -81,11 +83,14 @@
 <script>
   import GoodsCount from 'common/components/goods-count/goodsCount'
   import picData from 'mock-data/goodsDetail'
+  import ImageTextInfo from 'components/goods-detail/imageTextInfo/imageTextInfo'
+  import SpecParameter from 'components/goods-detail/specParameter/specParameter'
 
   export default {
     data() {
       return {
-        picList: picData.picList
+        picList: picData.picList,
+        currentComponent: SpecParameter
       }
     },
     methods: {
@@ -110,7 +115,7 @@
       }
     },
     components: {
-      GoodsCount
+      GoodsCount,ImageTextInfo,SpecParameter
     }
   }
 </script>
