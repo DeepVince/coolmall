@@ -60,17 +60,11 @@
       </div>
     </div>
     <div class="wrap goods-all-info">
-      <div class="tabs">
+      <div class="tabs" @click="switchTab" ref="tabs">
         <ul class="clear-fix">
-          <li>
-            <router-link to="#">商品描述</router-link>
-          </li>
-          <li>
-            <router-link to="#">参数配置</router-link>
-          </li>
-          <li>
-            <router-link to="#">用户评价</router-link>
-          </li>
+          <li>商品描述</li>
+          <li>参数配置</li>
+          <li>用户评价</li>
         </ul>
       </div>
       <div class="current-comp">
@@ -85,11 +79,13 @@
   import picData from 'mock-data/goodsDetail'
   import ImageTextInfo from 'components/goods-detail/imageTextInfo/imageTextInfo'
   import SpecParameter from 'components/goods-detail/specParameter/specParameter'
+  import CommentsList from 'components/goods-detail/commentsList/commentsList'
 
   export default {
     data() {
       return {
         picList: picData.picList,
+        tabComponentList: [ImageTextInfo, SpecParameter, CommentsList],
         currentComponent: SpecParameter
       }
     },
@@ -112,10 +108,21 @@
           list[i].style.opacity = 0.3
         }
         list[index].style.opacity = 1
+      },
+      // 切换Tab方法
+      switchTab(event) {
+        const e = event || window.event
+        const tabLiList = this.$refs.tabs.children[0].children
+        for (let i = 0; i < tabLiList.length; i++) {
+          if (e.target === tabLiList[i]) {
+            this.currentComponent = this.tabComponentList[i]
+            break
+          }
+        }
       }
     },
     components: {
-      GoodsCount,ImageTextInfo,SpecParameter
+      GoodsCount, ImageTextInfo, SpecParameter, CommentsList
     }
   }
 </script>
@@ -266,12 +273,18 @@
             background-color: #dd2946
 
     .goods-all-info
-      padding: 20px
+      padding: 30px
+      font-family: 'Microsoft YaHei'
       .tabs
         width: 100%
+        color: #666
         ul
           li
             float: left
-            margin-right: 30px
-
+            padding-bottom: 30px
+            margin-right: 60px
+            cursor: pointer
+            font-size: 18px
+          li:hover
+            color: $theme_second_color
 </style>
