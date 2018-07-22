@@ -54,18 +54,19 @@
           <goods-count ref="count" class="comp-count" maxV="5" minV="1" cWidth="100px" cHeight="40px"></goods-count>
         </div>
         <div class="operates">
-          <span class="op-btn btn-add-to-cart" @click="a">加入购物车 <i class="iconfont icon-publishgoods_fill" style="font-size: 18px;"></i></span>
-          <span class="op-btn btn-buy-now">立刻购买 <i class="iconfont icon-zhixiangyou"></i></span>
+          <span class="op-btn btn-add-to-cart" @click="a">加入购物车 <i class="iconfont icon-publishgoods_fill" style="font-size: 20px;"></i></span>
+          <span class="op-btn btn-buy-now">立刻购买</span>
         </div>
       </div>
     </div>
     <div class="wrap goods-all-info">
-      <div class="tabs" @click="switchTab" ref="tabs">
-        <ul class="clear-fix">
-          <li>商品描述</li>
-          <li>参数配置</li>
-          <li>用户评价</li>
+      <div class="tabs clear-fix" @click="switchTab" ref="tabs">
+        <ul class="clear-fix" ref="tabUl">
+          <li class="select-none">商品描述</li>
+          <li class="select-none">参数配置</li>
+          <li class="select-none">用户评价(999+)</li>
         </ul>
+        <indicator :inWidth="outWidth" marginSize='60' itemWidth="72" up="true" inTop="36" ref="indicator"></indicator>
       </div>
       <div class="current-comp">
         <component :is="currentComponent"></component>
@@ -80,18 +81,36 @@
   import ImageTextInfo from 'components/goods-detail/imageTextInfo/imageTextInfo'
   import SpecParameter from 'components/goods-detail/specParameter/specParameter'
   import CommentsList from 'components/goods-detail/commentsList/commentsList'
+  import Indicator from 'common/components/indicator/indicator'
 
   export default {
+    components: {
+      GoodsCount, ImageTextInfo, SpecParameter, CommentsList,Indicator
+    },
     data() {
       return {
         picList: picData.picList,
         tabComponentList: [ImageTextInfo, SpecParameter, CommentsList],
-        currentComponent: SpecParameter
+        currentComponent: SpecParameter,
+        outWidth: 336
       }
     },
     methods: {
       a() {
         alert(this.$refs.count.value)
+      },
+      // 切换Tab方法
+      switchTab(event) {
+        const e = event || window.event
+        const tabLiList = this.$refs.tabs.children[0].children
+        for (let i = 0; i < tabLiList.length; i++) {
+          tabLiList[i].style.color = '#666'
+          if (e.target === tabLiList[i]) {
+            this.currentComponent = this.tabComponentList[i]
+            this.$refs.indicator.selectTag(e,i)
+            tabLiList[i].style.color = '#05b570'
+          }
+        }
       },
       selectSmallPic(event) {
         const e = event || window.event
@@ -109,20 +128,6 @@
         }
         list[index].style.opacity = 1
       },
-      // 切换Tab方法
-      switchTab(event) {
-        const e = event || window.event
-        const tabLiList = this.$refs.tabs.children[0].children
-        for (let i = 0; i < tabLiList.length; i++) {
-          if (e.target === tabLiList[i]) {
-            this.currentComponent = this.tabComponentList[i]
-            break
-          }
-        }
-      }
-    },
-    components: {
-      GoodsCount, ImageTextInfo, SpecParameter, CommentsList
     }
   }
 </script>
@@ -255,16 +260,17 @@
           margin-top: 40px
           .op-btn
             display: inline-block
-            width: 120px
-            height: h = 40px
+            width: 180px
+            height: h = 60px
             line-height: h
             text-align: center
             color: #fff
             border-radius: 5px
             cursor: pointer
+            font-size: 18px
           .btn-add-to-cart
             background-color: #05b570
-            margin-right: 20px
+            margin-right: 40px
           .btn-add-to-cart:hover
             background-color: #049059
           .btn-buy-now
@@ -278,13 +284,21 @@
       .tabs
         width: 100%
         color: #666
+        position: relative
+        top: 0
+        left: 0
         ul
+          float: left
           li
             float: left
             padding-bottom: 30px
             margin-right: 60px
             cursor: pointer
             font-size: 18px
-          li:hover
+          li:first-child
             color: $theme_second_color
+          li:last-child
+            margin-right: 0
+          li:hover
+            color: $theme_second_color !important
 </style>

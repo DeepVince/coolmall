@@ -2,92 +2,35 @@
   <div class="spec-parameter">
     <div class="simple-props">
       <ul class="simple-props-list">
-        <li class="simple-props-item clear-fix">
-          <h2>硬件参数</h2>
+        <li v-for="item in allParameters" :key='item.id' class="simple-props-item clear-fix">
+          <h2>{{item.nameZh}}</h2>
           <div class="detail-props">
             <ul class="detail-props-list">
-              <li class="detail-props-item">
-                <span class="prop-key">CPU 型号：</span>
-                <span class="prop-value">Helio P60</span>
+              <li v-for="prop in item.detailParameters" :key="prop.id" class="detail-props-item">
+                <span class="prop-key">{{prop.nameZh}}：</span>
+                <span class="prop-value">{{prop.value}}</span>
               </li>
-              <li class="detail-props-item">
-                <span class="prop-key">CPU 频率：</span>
-                <span class="prop-value">2.0GHz</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">核心数：</span>
-                <span class="prop-value">8核</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">处理器位数：</span>
-                <span class="prop-value">64位</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">GPU 型号：</span>
-                <span class="prop-value">Mali G72 MP3</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">RAM 容量：</span>
-                <span class="prop-value">6GB</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">ROM 容量：</span>
-                <span class="prop-value">128GB</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">电池 容量：</span>
-                <span class="prop-value">3450mAh（典型容量）</span>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="simple-props-item clear-fix">
-          <h2>尺寸</h2>
-          <div class="detail-props">
-            <ul class="detail-props-list">
-              <li class="detail-props-item">
-                <span class="prop-key">CPU 型号：</span>
-                <span class="prop-value">Helio P60</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">CPU 频率：</span>
-                <span class="prop-value">2.0GHz</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">核心数：</span>
-                <span class="prop-value">8核</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">处理器位数：</span>
-                <span class="prop-value">64位</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">GPU 型号：</span>
-                <span class="prop-value">Mali G72 MP3</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">RAM 容量：</span>
-                <span class="prop-value">6GB</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">ROM 容量：</span>
-                <span class="prop-value">128GB</span>
-              </li>
-              <li class="detail-props-item">
-                <span class="prop-key">电池 容量：</span>
-                <span class="prop-value">3450mAh（典型容量）</span>
+              <li v-for='info in item.descInfo' :key='info.id' class="desc-info-list">
+                <span class="desc-info">{{info.content}}</span>
               </li>
             </ul>
           </div>
         </li>
       </ul>
-
     </div>
   </div>
 </template>
 
 <script>
-  export default {}
+  import datas from 'mock-data/goodsDetail'
+
+  export default {
+    data() {
+      return {
+        allParameters: datas.allParameters
+      }
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -97,7 +40,7 @@
     font-family: 'Microsoft YaHei'
     .simple-props
       width: 100%
-      padding: 40px
+      padding: 40px 20px 40px 80px
       .simple-props-list
         .simple-props-item
           border-bottom: 1px dashed #ccc
@@ -109,11 +52,28 @@
             float: left
             font-weight: lighter
           .detail-props
-            padding: 0 50px
+            padding: 0 80px
             float: left
             margin-bottom: 10px
             .detail-props-list
               .detail-props-item
-                margin-bottom: 20px
+                margin-bottom: 6px
+                span
+                  display: inline-block
+                  vertical-align: top
+                .prop-value
+                  max-width: 500px
+                  line-height: 30px
+                  position: relative
+                  top: -6px
+                  left: 0
+              .desc-info-list
+                .desc-info
+                  display: inline-block
+                  line-height: 30px
+                  position: relative
+                  top: -6px
+                  left: 0
+                  max-width: 700px
 
 </style>
