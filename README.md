@@ -1,4 +1,4 @@
-# zeromall
+# CoolMall
 
 > online shopping mall
 

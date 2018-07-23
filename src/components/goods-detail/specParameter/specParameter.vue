@@ -40,7 +40,7 @@
     font-family: 'Microsoft YaHei'
     .simple-props
       width: 100%
-      padding: 40px 20px 40px 80px
+      padding: 40px 80px 40px 80px
       .simple-props-list
         .simple-props-item
           border-bottom: 1px dashed #ccc

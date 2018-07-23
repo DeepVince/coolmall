@@ -8,9 +8,10 @@
           </div>
         </div>
         <div class="small-pics clear-fix">
-          <div class="pics-bar">
-            <div class="current-tag" ref="scrollBar"><i class="iconfont icon-play_fill"></i></div>
-          </div>
+          <!--<div class="pics-bar">-->
+            <!--<div class="current-tag" ref="scrollBar"><i class="iconfont icon-play_fill"></i></div>-->
+          <!--</div>-->
+          <indicator :inWidth="380" marginSize='20' itemWidth="80" inTop="-30" ref="picIndicator"></indicator>
           <ul class="clear-fix" @click='selectSmallPic' ref="smallPics">
             <li v-for="(item,index) in picList" :key="item.id"><img :src="item.url" alt="" :data-index="index"></li>
           </ul>
@@ -64,7 +65,7 @@
         <ul class="clear-fix" ref="tabUl">
           <li class="select-none">商品描述</li>
           <li class="select-none">参数配置</li>
-          <li class="select-none">用户评价(999+)</li>
+          <li class="select-none">用户评价</li>
         </ul>
         <indicator :inWidth="outWidth" marginSize='60' itemWidth="72" up="true" inTop="36" ref="indicator"></indicator>
       </div>
@@ -91,7 +92,7 @@
       return {
         picList: picData.picList,
         tabComponentList: [ImageTextInfo, SpecParameter, CommentsList],
-        currentComponent: SpecParameter,
+        currentComponent: ImageTextInfo,
         outWidth: 336
       }
     },
@@ -114,13 +115,17 @@
       },
       selectSmallPic(event) {
         const e = event || window.event
+        let index = 0
         // 获取当前点击图片的索引,从而计算大图片的显示和游标滑动
-        const index = e.target.attributes['data-index'].nodeValue
+        if(e.target.tagName === 'IMG'){
+          index = e.target.attributes['data-index'].nodeValue
+        }else{
+          return
+        }
 
         // 更新大图片和滑块位置
         this.$refs.bigPic.style.left = (-560 * index) + 'px'
-        this.$refs.scrollBar.style.left = (100 * index) + 'px'
-
+        this.$refs.picIndicator.selectTag(e,index)
         // 高亮当前小图片，模糊其他小图片
         const list = this.$refs.smallPics.children
         for (let i = 0; i < list.length; i++) {
@@ -162,7 +167,10 @@
         .small-pics
           width: 380px
           margin: 0 auto
-          margin-top: 20px
+          margin-top: 60px
+          position: relative
+          top: 0
+          left: 0
           .pics-bar
             width: 100%
             height: 3px
