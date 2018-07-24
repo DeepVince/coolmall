@@ -9,7 +9,7 @@
         </div>
         <div class="small-pics clear-fix">
           <!--<div class="pics-bar">-->
-            <!--<div class="current-tag" ref="scrollBar"><i class="iconfont icon-play_fill"></i></div>-->
+          <!--<div class="current-tag" ref="scrollBar"><i class="iconfont icon-play_fill"></i></div>-->
           <!--</div>-->
           <indicator :inWidth="380" marginSize='20' itemWidth="80" inTop="-30" ref="picIndicator"></indicator>
           <ul class="clear-fix" @click='selectSmallPic' ref="smallPics">
@@ -70,7 +70,7 @@
         <indicator :inWidth="outWidth" marginSize='60' itemWidth="72" up="true" inTop="36" ref="indicator"></indicator>
       </div>
       <div class="current-comp">
-        <component :is="currentComponent"></component>
+        <component :is="currentComponent" :comp-data="currentData"></component>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
 
 <script>
   import GoodsCount from 'common/components/goods-count/goodsCount'
-  import picData from 'mock-data/goodsDetail'
+  import allData from 'mock-data/goodsDetail'
   import ImageTextInfo from 'components/goods-detail/imageTextInfo/imageTextInfo'
   import SpecParameter from 'components/goods-detail/specParameter/specParameter'
   import CommentsList from 'components/goods-detail/commentsList/commentsList'
@@ -86,13 +86,27 @@
 
   export default {
     components: {
-      GoodsCount, ImageTextInfo, SpecParameter, CommentsList,Indicator
+      GoodsCount, ImageTextInfo, SpecParameter, CommentsList, Indicator
     },
     data() {
       return {
-        picList: picData.picList,
-        tabComponentList: [ImageTextInfo, SpecParameter, CommentsList],
+        picList: allData.picList,
+        tabComponentList: [
+          {
+            data: allData.imageTextInfoPicList,
+            component: ImageTextInfo
+          },
+          {
+            data: allData.allParameters,
+            component: SpecParameter
+          },
+          {
+            data: allData.comments,
+            component: CommentsList
+          }
+        ],
         currentComponent: ImageTextInfo,
+        currentData:allData.imageTextInfoPicList,
         outWidth: 336
       }
     },
@@ -107,8 +121,9 @@
         for (let i = 0; i < tabLiList.length; i++) {
           tabLiList[i].style.color = '#666'
           if (e.target === tabLiList[i]) {
-            this.currentComponent = this.tabComponentList[i]
-            this.$refs.indicator.selectTag(e,i)
+            this.currentComponent = this.tabComponentList[i].component
+            this.currentData = this.tabComponentList[i].data
+            this.$refs.indicator.selectTag(e, i)
             tabLiList[i].style.color = '#05b570'
           }
         }
@@ -117,15 +132,15 @@
         const e = event || window.event
         let index = 0
         // 获取当前点击图片的索引,从而计算大图片的显示和游标滑动
-        if(e.target.tagName === 'IMG'){
+        if (e.target.tagName === 'IMG') {
           index = e.target.attributes['data-index'].nodeValue
-        }else{
+        } else {
           return
         }
 
         // 更新大图片和滑块位置
         this.$refs.bigPic.style.left = (-560 * index) + 'px'
-        this.$refs.picIndicator.selectTag(e,index)
+        this.$refs.picIndicator.selectTag(e, index)
         // 高亮当前小图片，模糊其他小图片
         const list = this.$refs.smallPics.children
         for (let i = 0; i < list.length; i++) {

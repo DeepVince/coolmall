@@ -2,21 +2,18 @@
   <div class="comments-list">
     <div class="overview clear-fix">
       <div class="evaluation-block degree-of-satisfaction">
-        <h2><em>99</em>%</h2>
+        <h2><em>{{comments.wonderfulRate}}</em>%</h2>
         <p>用户感到满意</p>
       </div>
       <div class="evaluation-block degree-of-highest-star">
-        <h2><em>98</em>%</h2>
+        <h2><em>{{comments.bestRate}}</em>%</h2>
         <p>最佳5星好评</p>
       </div>
       <div class="user-impression">
         <h2>大家印象</h2>
         <div class="impression-list">
           <ul class="clear-fix">
-            <li>物流快(523)</li>
-            <li>续航不错(621)</li>
-            <li>外观漂亮(1024)</li>
-            <li>性能强悍(806)</li>
+            <li v-for="item in comments.impressions">{{item.text}}({{item.count}})</li>
           </ul>
         </div>
       </div>
@@ -24,80 +21,77 @@
     <div class="comments">
       <div class="comment-tab">
         <ul class="clear-fix">
-          <li>全部(9211)</li>
-          <li>晒图(3562)</li>
-          <li>追评(2683)</li>
+          <li>全部({{comments.statistic.all}})</li>
+          <li>晒图({{comments.statistic.withPic}})</li>
+          <li>追评({{comments.statistic.addAfter}})</li>
         </ul>
       </div>
       <div class="list-display">
         <ul>
-          <li class="clear-fix">
+          <li v-for='aComment in comments.commentsList' :key='aComment.user.id' class="clear-fix">
             <div class="head-portrait clear-fix">
-              <img src="../images/user-1.png" alt="">
+              <img :src="aComment.user.headPortraitUrl" alt="">
               <div class="name-ratings">
-                <h3 class="user-name">巴拉巴aa</h3>
+                <h3 class="user-name">{{aComment.user.name}}</h3>
                 <span>
-                  <i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i>
+                  <i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i
+                  class="iconfont icon-collection_fill"></i>
                 </span>
               </div>
             </div>
             <div class="comment-content">
               <div class="user-comment">
-                <p class="user-comment-text">手机收到了。。外观超好看。。21号下的单。中午就到了，不过物流没给我电话，我晚上看信息才看到，立马去拿了，感觉给了我一个惊喜，不不不，应该是两个。特意用了十多小时才来评价。体验给个赞！</p>
-                <div class="user-comment-pic clear-fix">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
+                <p class="user-comment-text">{{aComment.comment.content}}</p>
+                <div class="user-comment-pic clear-fix" ref="commentPics" @click="selectPic">
+                  <img v-for='aImg in aComment.comment.pics' :src="aImg.url" alt="" :key="aImg.id">
                 </div>
               </div>
               <div class="seller-reply">
                 <i class="iconfont icon-play_fill"></i>
                 <span>商家回复：</span>
-                <span class="reply-content">不敢辜负您的支持，怕您等的太着急，所以物流小哥以最快的速度飞向您的位置哦。您的认可，是我们需要变的更好的理由！期待R15星云特别版未来给您带来更多的惊喜！【AI智能拍照 让美更自然】</span>
-              </div>
-            </div>
-          </li><li class="clear-fix">
-            <div class="head-portrait clear-fix">
-              <img src="../images/user-1.png" alt="">
-              <div class="name-ratings">
-                <h3 class="user-name">巴拉巴aa</h3>
-                <span>
-                  <i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i><i class="iconfont icon-collection_fill"></i>
-                </span>
-              </div>
-            </div>
-            <div class="comment-content">
-              <div class="user-comment">
-                <p class="user-comment-text">手机收到了。。外观超好看。。21号下的单。中午就到了，不过物流没给我电话，我晚上看信息才看到，立马去拿了，感觉给了我一个惊喜，不不不，应该是两个。特意用了十多小时才来评价。体验给个赞！</p>
-                <div class="user-comment-pic clear-fix">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                  <img src="https://dsfs.oppo.com/archives/uploads/201805/201805230105415b04f9b171c62.jpg" alt="">
-                </div>
-              </div>
-              <div class="seller-reply">
-                <i class="iconfont icon-play_fill"></i>
-                <span>商家回复：</span>
-                <span class="reply-content">不敢辜负您的支持，怕您等的太着急，所以物流小哥以最快的速度飞向您的位置哦。您的认可，是我们需要变的更好的理由！期待R15星云特别版未来给您带来更多的惊喜！【AI智能拍照 让美更自然】</span>
+                <span class="reply-content">{{aComment.comment.reply.content}}</span>
               </div>
             </div>
           </li>
         </ul>
       </div>
     </div>
+    <pic-look ref="picLook"></pic-look>
   </div>
 </template>
 
 <script>
-  export default {}
+  import PicLook from 'common/components/picLook/picLook'
+
+  export default {
+    props: {compData: Object},
+    data() {
+      return {
+        comments: this.compData
+      }
+    },
+    methods: {
+      selectPic(event) {
+        const e = event || window.event
+        const target = e.target
+        if(target.tagName === 'IMG'){
+          const list = target.parentNode.children
+          const imgList = []
+          let index = 0
+          for(let i=0;i<list.length;i++){
+            if(target === list[i]){
+              index = i
+            }
+            imgList.push({id:i,url:list[i].src})
+          }
+          this.$refs.picLook.show(imgList,index)
+        }
+      }
+    },
+    components: {
+      PicLook
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -165,7 +159,7 @@
           li:hover
             color: $theme_second_color
       .list-display
-        padding: 30px 20px 30px 120px
+        padding: 50px 20px 30px 120px
         ul
           li
             margin-bottom: 40px
@@ -207,6 +201,7 @@
                     width: w = 80px
                     height: w
                     margin-right: 20px
+                    cursor: pointer
                   img:last-child
                     margin-right: 0
               .seller-reply
@@ -222,10 +217,9 @@
                 i
                   transform: rotateZ(-90deg)
                   position: absolute
-                  top: -10px
+                  top: -13px
                   left: 50px
                   color: c
                 .reply-content
                   color: #666
-
 </style>

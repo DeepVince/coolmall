@@ -22,12 +22,11 @@
 </template>
 
 <script>
-  import datas from 'mock-data/goodsDetail'
-
   export default {
+    props: {compData: Array},
     data() {
       return {
-        allParameters: datas.allParameters
+        allParameters: this.compData
       }
     }
   }

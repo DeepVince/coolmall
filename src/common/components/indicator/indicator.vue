@@ -3,7 +3,6 @@
     <div class="current-tag" ref="scrollBar" :style="{width:blockWidth+'px'}"><i :class="['iconfont icon-play_fill',{up:upClass}]"></i></div>
   </div>
 </template>
-
 <script>
   export default {
     props: ['inWidth', 'inTop','itemWidth','up','marginSize'],
@@ -19,22 +18,11 @@
     methods: {
       selectTag(event,index) {
         const e = event || window.event
-        // 获取当前点击图片的索引,从而计算大图片的显示和游标滑动
-        // const index = e.target.attributes['data-index'].nodeValue
-        // 更新大图片和滑块位置
-        // this.$refs.bigPic.style.left = (-560 * index) + 'px'
         this.$refs.scrollBar.style.left = ((parseInt(this.blockWidth) + parseInt(this.moveSize)) * index) + 'px'
-        // 高亮当前小图片，模糊其他小图片
-        // const list = this.$refs.smallPics.children
-        // for (let i = 0; i < list.length; i++) {
-        //   list[i].style.opacity = 0.3
-        // }
-        //list[index].style.opacity = 1
       },
     }
   }
 </script>
-
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/css/variable.styl"
   .indicator

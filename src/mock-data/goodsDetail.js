@@ -3,66 +3,66 @@ export default {
   picList: [
     {
       id: 0,
-      url: 'https://dsfs.oppo.com/archives/201805/201805170205015afd21a5ee6b7.png'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/phone-1.png'
     },
     {
       id: 1,
-      url: 'https://dsfs.oppo.com/archives/201805/201805170205535afd21612c5c8.png'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/phone-2.png'
     },
     {
       id: 2,
-      url: 'https://dsfs.oppo.com/archives/201805/201805170205565afd2164f3977.png'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/phone-3.png'
     },
     {
       id: 3,
-      url: 'https://dsfs.oppo.com/archives/201805/201805170205575afd21a1bc79a.png'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/phone-4.png'
     },
   ],
   // 图文详情图片
   imageTextInfoPicList: [
     {
       id: 0,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405335af94d9d4366e.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-1.jpg'
     },
     {
       id: 1,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405425af94da6a645d.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-2.jpg'
     },
     {
       id: 2,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405495af94dada0af1.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-3.jpg'
     },
     {
       id: 3,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405005af94db801d0d.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-4.jpg'
     },
     {
       id: 4,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405065af94dbea1a16.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-5.jpg'
     },
     {
       id: 5,
-      url: 'https://dsfs.oppo.com/archives/201806/201806041006165b14a99c8a8b2.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-6.jpg'
     },
     {
       id: 6,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405475af94de7c9ef0.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-7.jpg'
     },
     {
       id: 7,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405535af94ded9b31d.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-8.jpg'
     },
     {
       id: 8,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405005af94df41be00.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-9.jpg'
     },
     {
       id: 9,
-      url: 'https://dsfs.oppo.com/archives/201805/201805140405045af94df8cf9eb.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-10.jpg'
     },
     {
       id: 10,
-      url: 'https://dsfs.oppo.com/archives/201805/201805150305185afa91ee01ecc.jpg'
+      url: 'http://pccnvwbyj.bkt.clouddn.com/r15-11.jpg'
     }
   ],
   // 规格参数数据
@@ -72,44 +72,44 @@ export default {
       nameZh: '硬件参数',
       detailParameters: [
         {
-          id:'0',
-          nameZh:'CPU 型号',
-          value:'Helio P60'
+          id: '0',
+          nameZh: 'CPU 型号',
+          value: 'Helio P60'
         },
         {
-          id:'1',
-          nameZh:'CPU 频率',
-          value:'2.0GHz'
+          id: '1',
+          nameZh: 'CPU 频率',
+          value: '2.0GHz'
         },
         {
-          id:'2',
-          nameZh:'核心数',
-          value:'8核'
+          id: '2',
+          nameZh: '核心数',
+          value: '8核'
         },
         {
-          id:'3',
-          nameZh:'处理器位数',
-          value:'64位'
+          id: '3',
+          nameZh: '处理器位数',
+          value: '64位'
         },
         {
-          id:'4',
-          nameZh:'GPU 型号',
-          value:'Mali G72 MP3'
+          id: '4',
+          nameZh: 'GPU 型号',
+          value: 'Mali G72 MP3'
         },
         {
-          id:'5',
-          nameZh:'RAM 容量',
-          value:'6GB'
+          id: '5',
+          nameZh: 'RAM 容量',
+          value: '6GB'
         },
         {
-          id:'6',
-          nameZh:'ROM 容量',
-          value:'128GB'
+          id: '6',
+          nameZh: 'ROM 容量',
+          value: '128GB'
         },
         {
-          id:'7',
-          nameZh:'电池容量',
-          value:'3450mAh（典型容量）'
+          id: '7',
+          nameZh: '电池容量',
+          value: '3450mAh（典型容量）'
         }
       ]
     },
@@ -118,24 +118,24 @@ export default {
       nameZh: '尺寸',
       detailParameters: [
         {
-          id:'0',
-          nameZh:'长',
-          value:'约 155.1mm'
+          id: '0',
+          nameZh: '长',
+          value: '约 155.1mm'
         },
         {
-          id:'1',
-          nameZh:'宽',
-          value:'约 75.2mm'
+          id: '1',
+          nameZh: '宽',
+          value: '约 75.2mm'
         },
         {
-          id:'2',
-          nameZh:'厚',
-          value:'约 7.4mm'
+          id: '2',
+          nameZh: '厚',
+          value: '约 7.4mm'
         },
         {
-          id:'3',
-          nameZh:'重',
-          value:'约 175g'
+          id: '3',
+          nameZh: '重',
+          value: '约 175g'
         }
       ]
     },
@@ -211,9 +211,9 @@ export default {
       nameZh: '操作系统',
       detailParameters: [
         {
-          id:'0',
+          id: '0',
           nameZh: 'Android',
-          value:'基于安卓8.1开发的 ColorOS 5.0'
+          value: '基于安卓8.1开发的 ColorOS 5.0'
         }
       ]
     },
@@ -222,58 +222,58 @@ export default {
       nameZh: '数据功能',
       detailParameters: [
         {
-          id:'0',
+          id: '0',
           nameZh: '蓝牙',
-          value:'蓝牙5.0'
+          value: '蓝牙5.0'
         },
         {
-          id:'1',
+          id: '1',
           nameZh: 'WLAN 功能',
-          value:'WLAN 2.4G / WLAN 5.1G / WLAN 5.8G / WLAN Display'
+          value: 'WLAN 2.4G / WLAN 5.1G / WLAN 5.8G / WLAN Display'
         },
         {
-          id:'2',
+          id: '2',
           nameZh: '数据接口',
-          value:'Micro USB'
+          value: 'Micro USB'
         },
         {
-          id:'3',
+          id: '3',
           nameZh: '耳机插孔',
-          value:'3.5mm 美标耳机'
+          value: '3.5mm 美标耳机'
         },
         {
-          id:'5',
+          id: '5',
           nameZh: '支持',
-          value:'支持 OTG 数据传输'
+          value: '支持 OTG 数据传输'
         }
       ]
     },
     {
       id: '6',
       nameZh: '手机附件',
-      descInfo:[
+      descInfo: [
         {
-          id:'0',
+          id: '0',
           content: '主 机 x1'
         },
         {
-          id:'1',
+          id: '1',
           content: '耳 机 x1'
         },
         {
-          id:'2',
+          id: '2',
           content: '数据线 x1'
         },
         {
-          id:'3',
+          id: '3',
           content: '充电器 x1'
         },
         {
-          id:'4',
+          id: '4',
           content: 'SIM卡通针 x1'
         },
         {
-          id:'5',
+          id: '5',
           content: '保护套 x1'
         },
       ]
@@ -281,20 +281,107 @@ export default {
     {
       id: '7',
       nameZh: '温馨提示',
-      descInfo:[
+      descInfo: [
         {
-          id:'0',
+          id: '0',
           content: '为了使手机正面视觉更简洁，我们对屏幕上方光感孔做了隐藏工艺。'
         },
         {
-          id:'1',
+          id: '1',
           content: '彩色、深色等透光性不良的贴膜均有可能会挡住感光孔，影响手机正常使用。'
         },
         {
-          id:'2',
+          id: '2',
           content: '官方保护壳及贴膜设计参考图。'
         }
       ]
     },
-  ]
+  ],
+  comments: {
+    wonderfulRate: '99',
+    bestRate: '98',
+    statistic: {
+      all: '9211',
+      withPic: '3562',
+      addAfter: '2683'
+    },
+    impressions: [
+      {
+        id: '0',
+        text: '物流快',
+        count: 523
+      },
+      {
+        id: '1',
+        text: '续航不错',
+        count: 621
+      },
+      {
+        id: '2',
+        text: '外观漂亮',
+        count: 1024
+      },
+      {
+        id: '3',
+        text: '性能强悍',
+        count: 806
+      },
+    ],
+    commentsList: [
+      {
+        user: {
+          id: 'u0',
+          name: '巴拉巴aa',
+          headPortraitUrl: 'http://pccnvwbyj.bkt.clouddn.com/user-1.png'
+        },
+        comment: {
+          commentId: 'cmt0',
+          content: '手机收到了。。外观超好看。。21号下的单。中午就到了，不过物流没给我电话，我晚上看信息才看到，立马去拿了，感觉给了我一个惊喜，不不不，应该是两个。特意用了十多小时才来评价。体验给个赞！',
+          pics: [
+            {
+              id: 'img0',
+              url: 'http://pccnvwbyj.bkt.clouddn.com/cmt-1.jpg'
+            },
+            {
+              id: 'img1',
+              url: 'http://pccnvwbyj.bkt.clouddn.com/cmt-2.jpg'
+            },
+            {
+              id: 'img2',
+              url: 'http://pccnvwbyj.bkt.clouddn.com/cmt-3.jpg'
+            },
+          ],
+          reply: {
+            replyId: 'rpl0',
+            content: '不敢辜负您的支持，怕您等的太着急，所以物流小哥以最快的速度飞向您的位置哦。您的认可，是我们需要变的更好的理由！期待R15星云特别版未来给您带来更多的惊喜！【AI智能拍照 让美更自然】'
+          }
+        }
+      },
+      {
+        user: {
+          id: 'u1',
+          name: 'Y时光',
+          headPortraitUrl: 'http://pccnvwbyj.bkt.clouddn.com/user-2.png'
+        },
+        comment: {
+          commentId: 'cmt676',
+          content: '拿到手机好开心 外形很好看 拍照超级好看 很好用 好多功能还在满满摸索 总之超级满意',
+          pics: [
+            {
+              id: 'img234',
+              url: 'http://pccnvwbyj.bkt.clouddn.com/cmt-4.jpg'
+            },
+            {
+              id: 'img5677',
+              url: 'http://pccnvwbyj.bkt.clouddn.com/cmt-5.jpg'
+            },
+          ],
+          reply: {
+            replyId: 'rpl322',
+            content: '您的赞美已深深打动小欧，感谢OPPO成长的路上一路有你相伴，我们一定会更加努力，为O粉打造更惊艳的产品和提供更优质的服务！使用遇到不明白的地方可咨询在线客服哦，欢迎您的到来~【AI智能拍照 让美更自然】'
+          }
+        }
+      }
+    ]
+  }
 }

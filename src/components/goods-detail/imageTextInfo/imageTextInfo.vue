@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import list from 'mock-data/goodsDetail'
   export default {
-    data(){
+    props: {compData: Array},
+    data() {
       return {
-        picList: list.imageTextInfoPicList
+        picList: this.compData
       }
     }
   }
