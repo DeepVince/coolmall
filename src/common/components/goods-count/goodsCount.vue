@@ -1,6 +1,6 @@
 <template>
-  <div class="count" ref="outsideDiv">
-    <span class="op subtraction select-none" @click="subtraction" ref="ops">-</span><input type="text" value="1" v-model="value" @keyup="adjust" ref="inputArea"><span class="op add select-none" @click="add" ref="opa">+</span>
+  <div class="count" ref="outsideDiv" :style="{height:cssSet.myHeight+'px'}">
+    <span class="op subtraction select-none" @click="subtraction" ref="ops" :style="{width:cssSet.btWidth+'px'}">-</span><input type="text" value="1" v-model="value" @keyup="adjust" ref="inputArea" :style="{width:cssSet.inputWidth+'px'}"><span class="op add select-none" @click="add" ref="opa" :style="{width:cssSet.btWidth+'px'}">+</span>
   </div>
 </template>
 
@@ -11,7 +11,12 @@
       return {
         value: 1,
         minValue: 1,
-        maxValue: 10
+        maxValue: 10,
+        cssSet:{
+          myHeight: 30,
+          btWidth: 30,
+          inputWidth: 50
+        }
       }
     },
     created: function () {
@@ -74,12 +79,13 @@
       cursor: pointer
       text-align: center
     input
+      display: inline-block
       width: 120px
       height: 100%
       line-height: 100%
       background-color: #fbfbfb
-      display: inline-block
       vertical-align: top
       padding: 0 10px
       text-align: center
+      font-family: 'lato'
 </style>

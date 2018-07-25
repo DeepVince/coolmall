@@ -17,8 +17,8 @@
           <router-link to="/">VIVO NEX</router-link>
         </div>
       </div>
-      <div class="cart">
-        <span class="cart-span">我的购物车 <i class="cart-count">1</i></span>
+      <div class="myCart">
+        <span class="cart-span" @click="enterCart"><i class="iconfont icon-publishgoods_fill cart-icon"></i>我的购物车 <i class="cart-count">1</i></span>
       </div>
     </div>
   </div>
@@ -29,6 +29,9 @@
     methods: {
       searchGoods() {
         this.$router.push('goodsDetail')
+      },
+      enterCart(){
+        this.$router.push('cart')
       }
     }
   }
@@ -82,7 +85,7 @@
           color: $theme_color
           a
             margin-right: 10px
-      .cart
+      .myCart
         float: left
         height: headerHeight
         padding: 38px 0
@@ -91,6 +94,7 @@
           display: block
           height: 44px
           padding: 0 30px
+          padding-left: 50px
           line-height: 44px
           border: 2px solid $theme_color
           color: $theme_color
@@ -99,7 +103,12 @@
           position: relative
           top: 0
           left: 0
-          i
+          .cart-icon
+            position: absolute
+            top: 0
+            left: 20px
+            font-size: 24px
+          .cart-count
             display: block
             height: h = 16px
             width: h
@@ -116,7 +125,7 @@
         span:hover
           background-color: $theme_color
           color: #fff
-          i
+          .cart-count
             background-color: #fff
             color: $theme_color
 

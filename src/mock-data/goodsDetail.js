@@ -360,7 +360,7 @@ export default {
       {
         user: {
           id: 'u1',
-          name: 'Y时光',
+          name: '时光',
           headPortraitUrl: 'http://pccnvwbyj.bkt.clouddn.com/user-2.png'
         },
         comment: {
