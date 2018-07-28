@@ -54,7 +54,7 @@
             <goods-count ref="count" class="comp-count" maxV="5" minV="1" cWidth="100px" cHeight="40px"></goods-count>
           </div>
           <div class="operates">
-            <span class="op-btn btn-add-to-cart" @click="a">加入购物车 <i class="iconfont icon-gouwuche" style="font-size: 20px;"></i></span>
+            <span class="op-btn btn-add-to-cart" @click="addToCart">加入购物车 <i class="iconfont icon-gouwuche" style="font-size: 20px;"></i></span>
             <span class="op-btn btn-buy-now">立刻购买</span>
           </div>
         </div>
@@ -112,8 +112,8 @@
       }
     },
     methods: {
-      a() {
-        alert(this.$refs.count.value)
+      addToCart() {
+        alert('成功添加'+this.$refs.count.value+'件该商品至购物车')
       },
       // 切换Tab方法
       switchTab(event) {
