@@ -118,10 +118,12 @@
       // 切换Tab方法
       switchTab(event) {
         const e = event || window.event
+        console.log(e.target)
         const tabLiList = this.$refs.tabs.children[0].children
         for (let i = 0; i < tabLiList.length; i++) {
           tabLiList[i].style.color = '#666'
           if (e.target === tabLiList[i]) {
+
             this.currentComponent = this.tabComponentList[i].component
             this.currentData = this.tabComponentList[i].data
             this.$refs.indicator.selectTag(e, i)
