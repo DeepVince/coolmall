@@ -28,7 +28,7 @@
   export default {
     methods: {
       searchGoods() {
-        this.$router.push('goodsDetail')
+        this.$router.push('searchResult')
       },
       enterCart(){
         this.$router.push('cart')
@@ -39,16 +39,17 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '~common/css/variable.styl'
-  headerHeight = 120px
+  headerHeight = 140px
   .header-search
     background-color: #fff
     .search-wrapper
       width: 1200px
       height: headerHeight
       margin: 0 auto
+      padding-bottom: 20px
       .logo-area
         float: left
-        line-height: headerHeight
+        line-height: 120px
         font-size: 36px
         font-weight: bold
         color: #ff4470

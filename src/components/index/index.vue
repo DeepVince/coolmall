@@ -52,6 +52,12 @@
         </div>
       </div>
     </div>
+    <div class="new-phone">
+      <div class="wrapper new-phone-wrapper">
+        <h2>新机风尚</h2>
+
+      </div>
+    </div>
   </div>
 </template>
 
