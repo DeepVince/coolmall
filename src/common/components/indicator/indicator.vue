@@ -1,24 +1,39 @@
 <template>
-  <div class="indicator" :style="{width:indicatorWidth + 'px',top:indicatorTop + 'px'}">
-    <div class="current-tag" ref="scrollBar" :style="{width:blockWidth+'px'}"><i :class="['iconfont icon-play_fill',{up:upClass}]"></i></div>
+  <div class="indicator" :style="{width:count*parseInt(unitWidth)+(count-1)*parseInt(unitMargin)+'px'}">
+    <div class="current-tag" ref="scrollBar" :style="{width:unitWidth}"><i :class="['iconfont icon-play_fill',{up:direction ==='up'}]" :style="{left:(parseInt(unitWidth)/2 - 8) + 'px'}"></i></div>
   </div>
 </template>
 <script>
   export default {
-    props: ['inWidth', 'inTop','itemWidth','up','marginSize'],
-    data() {
-      return {
-        indicatorWidth: this.inWidth || 0,
-        indicatorTop:this.inTop || 0,
-        blockWidth: this.itemWidth || 0,
-        moveSize:this.marginSize || 0,
-        upClass: this.up
+    // props: ['inWidth', 'inTop','itemWidth','up','marginSize'],
+    props: {
+      count: {
+        type: String,
+        default: '1'
+      },
+      unitWidth: {
+        type: String,
+        default: '100px'
+      },
+      barHeight: {
+        type: String,
+        default: '3px'
+      },
+      unitMargin: {
+        type: String,
+        default: '0'
+      },
+      direction:{
+        type: String,
+        default: 'down'
       }
     },
+    data() {
+      return {}
+    },
     methods: {
-      selectTag(event,index) {
-        const e = event || window.event
-        this.$refs.scrollBar.style.left = ((parseInt(this.blockWidth) + parseInt(this.moveSize)) * index) + 'px'
+      selectTag(index) {
+        this.$refs.scrollBar.style.left = ((parseInt(this.unitWidth) + parseInt(this.unitMargin)) * index) + 'px'
       },
     }
   }
@@ -26,13 +41,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/css/variable.styl"
   .indicator
-    width: 100%
     height: 3px
     background-color: #eee
     border-radius: 2px
     margin-bottom: 20px
-    position: absolute
-    top: 30px
+    position: relative
+    top: 0
     left: 0
     .current-tag
       width: 72px

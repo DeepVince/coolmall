@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="small-pics clear-fix">
-            <indicator :inWidth="380" marginSize='20' itemWidth="80" inTop="-30" ref="picIndicator"></indicator>
+            <indicator unitWidth="80px" count='4' unitMargin="20px" ref="picIndicator"></indicator>
             <ul class="clear-fix" @click='selectSmallPic' ref="smallPics">
               <li v-for="(item,index) in picList" :key="item.id"><img :src="item.url" alt="" :data-index="index"></li>
             </ul>
@@ -67,7 +67,7 @@
           <li class="select-none">参数配置</li>
           <li class="select-none">用户评价</li>
         </ul>
-        <indicator :inWidth="outWidth" marginSize='60' itemWidth="72" up="true" inTop="36" ref="indicator"></indicator>
+        <indicator unitWidth="72px" unitMargin='60px' count='3' up="true" ref="indicator"></indicator>
       </div>
       <div class="current-comp">
         <component :is="currentComponent" :comp-data="currentData"></component>
@@ -107,8 +107,7 @@
           }
         ],
         currentComponent: ImageTextInfo,
-        currentData:allData.imageTextInfoPicList,
-        outWidth: 336
+        currentData:allData.imageTextInfoPicList
       }
     },
     methods: {
@@ -123,10 +122,9 @@
         for (let i = 0; i < tabLiList.length; i++) {
           tabLiList[i].style.color = '#666'
           if (e.target === tabLiList[i]) {
-
             this.currentComponent = this.tabComponentList[i].component
             this.currentData = this.tabComponentList[i].data
-            this.$refs.indicator.selectTag(e, i)
+            this.$refs.indicator.selectTag(i)
             tabLiList[i].style.color = '#05b570'
           }
         }
@@ -143,7 +141,7 @@
 
         // 更新大图片和滑块位置
         this.$refs.bigPic.style.left = (-560 * index) + 'px'
-        this.$refs.picIndicator.selectTag(e, index)
+        this.$refs.picIndicator.selectTag(index)
         // 高亮当前小图片，模糊其他小图片
         const list = this.$refs.smallPics.children
         for (let i = 0; i < list.length; i++) {
@@ -318,7 +316,6 @@
         top: 0
         left: 0
         ul
-          float: left
           li
             float: left
             padding-bottom: 30px

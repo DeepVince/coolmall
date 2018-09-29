@@ -2,11 +2,10 @@
   <div class="header-tips">
     <div class="tips-wrapper clear-fix">
       <div class="left">
-        <router-link to="/login">登录</router-link>
-        <router-link to="/register">注册</router-link>
+        <router-link to="">九江</router-link>
       </div>
       <div class="right">
-        <router-link to="">请登录</router-link>
+        <router-link to="/login">请登录</router-link>
         <router-link to="">我的订单</router-link>
         <router-link to="">积分商城</router-link>
         <router-link to="">优品会员</router-link>

@@ -20,6 +20,9 @@
       <div class="myCart">
         <span class="cart-span" @click="enterCart"><i class="iconfont icon-publishgoods_fill cart-icon"></i>我的购物车 <i class="cart-count">1</i></span>
       </div>
+      <div class="user-icon">
+        <img src="http://pccnvwbyj.bkt.clouddn.com/user-1.png" alt="">
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +69,7 @@
             line-height: h
             vertical-align: top
           .input
-            width: 500px
+            width: 450px
             border: 2px solid $theme_color
             padding: 10px 10px
             input
@@ -130,4 +133,13 @@
             background-color: #fff
             color: $theme_color
 
+      .user-icon
+        height: 100%
+        padding-top: 38px
+        float: right
+        img
+          width: w= 46px
+          height: w
+          border-radius: 50%
+          box-shadow: 0 0 10px 0 #ddd
 </style>
