@@ -13,7 +13,7 @@
         <div class="login-way-text">
           <span @click="changeLoginWay(0)">账号登录</span><span @click="changeLoginWay(1)">短信登录</span>
           <div class="bar">
-            <indicator unitWidth="130px" up="true" ref="indicator"></indicator>
+            <indicator unitWidth="130px" count=2 up="true" ref="indicator"></indicator>
           </div>
         </div>
         <div class="switch-login-way">
@@ -75,6 +75,7 @@
   .login
     width: 100%
     height: 100%
+    overflow: hidden
     min-height: 792px
     background-color: #fff
     color: #666

@@ -64,10 +64,7 @@
         }.bind(this),4000)
       },
       nextItem(){
-        console.log('index:'+this.currentIndex)
         this.ulStyle.left = parseInt(this.ulStyle.left)- 100+ '%'
-        console.log(this.ulStyle.left)
-
         if(this.currentIndex<this.pics.length-1){
           this.ulStyle.transition = 'left 0.8s'
           this.currentIndex++
@@ -78,7 +75,6 @@
 
         if(parseInt(this.ulStyle.left)<-parseInt((this.pics.length+1)*100)){
           this.ulStyle.transition = 'left 0s'
-          console.log(this.$refs.ul.style.transition)
           this.ulStyle.left = '-100%'
         }
       },

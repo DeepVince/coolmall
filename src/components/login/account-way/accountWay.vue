@@ -18,19 +18,20 @@
         <span class="forget-text">忘记密码 <i class="iconfont icon-feedback_fill"></i></span>
       </p>
       <div class="login-btn">
-        <span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+        <span @click="login">登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
         account: '',
         password: '',
-        inputTips: '',
+        inputTips: 'xx',
         activeOne: false,
         activeTwo: false
       }
@@ -45,6 +46,25 @@
       blurInput() {
         this.activeOne = false
         this.activeTwo = false
+      },
+      login(){
+        let account = 'accountName'
+        account = this.isLoginByPhone ? 'phone' : account
+        axios.get('http://localhost:8080/TTMall/userLogin?'+account+'='+this.account+"&password="+this.password,{withCredentials:true})
+          .then((res) =>{
+            console.log(res)
+            if(res.data.status === true){
+              this.$router.push('/index')
+            }
+          })
+          .catch((err) =>{
+            console.log(err)
+          })
+      }
+    },
+    computed:{
+      isLoginByPhone(){
+        return /^[1-9]{1}[0-9]{10}$/.test(this.account)
       }
     }
   }

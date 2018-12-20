@@ -61,6 +61,7 @@
   .footer
     width: 100%
     background-color: $footer-background
+    box-shadow: 0 0 20px 0 #ddd
     a:hover
       color: $theme_color
     .wrap

@@ -1,19 +1,19 @@
 <template>
-  <div class="pay">
+  <div class="settlement">
     <div class="pay-wrapper">
       <div class="info-block address clear-fix">
         <h2 class="block-name">配送地址</h2>
         <div class="block-body block-body-address">
           <ul class="clear-fix">
-            <li v-for="address in addressList" :key="address.id" @click="selectAddress(address.id)" :class="{'active-address':currentAddress.id === address.id}">
+            <li v-for="address in addressList" :key="address.id" @click="selectAddress(address.id)" :class="{'active-address':selectedAddress.id === address.id}">
               <div class="name-phone">
-                <span class="address-name">{{address.name}}</span><span class="address-phone">{{address.phone}}</span>
+                <span class="address-name">{{address.contactName}}</span><span class="address-phone">{{address.contactPhone}}</span>
               </div>
               <div class="address-content">
-                <p>{{address.address}}</p>
+                <p>{{address.province+address.city+address.county+address.detail}}</p>
               </div>
               <div class="address-operate clear-fix">
-                <span class="check-state" v-show="currentAddress.id === address.id"><i class="iconfont icon-danxuankuang"></i></span>
+                <span class="check-state" v-show="selectedAddress.id === address.id"><i class="iconfont icon-danxuankuang"></i></span>
                 <span class="edit-address"><i class="iconfont icon-editor"></i></span>
               </div>
             </li>
@@ -22,6 +22,13 @@
               <p>添加新地址</p>
             </li>
           </ul>
+          <div class="select-address" ref="addressContainer">
+            <address-selector ref="address" v-if="editAddressStatus"></address-selector>
+            <div class="address-btns clear-fix" v-if="editAddressStatus">
+              <div class="address-btn address-cancel" @click="cancelAddAddress">取消</div>
+              <div class="address-btn address-save" @click="addUserAddress">保存</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -29,19 +36,19 @@
       <div class="info-block goods-list clear-fix">
         <h2 class="block-name">商品清单</h2>
         <div class="block-body block-body-goods-list">
-          <ul>
-            <li class="clear-fix" v-for="goods in goodsList" :key="goods.id">
+          <ul ref="goodsList">
+            <li class="clear-fix" v-for="goods in settlementGoodsList" :key="goods.id" v-if="settlementGoodsList">
               <div class="goods-info-block goods-img">
-                <img :src="goods.imgUrl" alt="">
+                <img :src="goods.goodsImageUrl" alt="">
               </div>
               <div class="goods-info-block goods-name">
-                <p ref="goodsName">{{goods.name}}</p>
+                <p>{{goods.goodsTitle}}</p>
               </div>
               <div class="goods-info-block goods-price">
-                ￥<span>{{goods.price}}</span>
+                ￥<span>{{goods.goodsPrice/100}}</span>
               </div>
               <div class="goods-info-block goods-count">
-                x<span>{{goods.count}}</span>
+                x<span>{{goods.amount}}</span>
               </div>
             </li>
           </ul>
@@ -69,46 +76,32 @@
           <div class="discount-code-input-box"><input type="text"></div>
         </div>
       </div>
-      <div class="info-block pay-way clear-fix">
-        <h2 class="block-name">支付方式</h2>
-        <div class="block-body">
-          <span class="weixin-pay">
-            <i class="iconfont icon-weixinzhifu"></i>&nbsp;&nbsp;微信支付
-          </span>
-          <span class="ali-pay">
-            <i class="iconfont icon-zhifubaozhifu1"></i>&nbsp;&nbsp;支付宝支付
-          </span>
-          <span class="huabei-pay">
-            <i class="iconfont icon-haikezhangguizhushou_huabeifenqi"></i>&nbsp;&nbsp;花呗分期
-          </span>
-        </div>
-      </div>
       <div class="total-info">
         <div class="total-info-wrapper clear-fix">
           <div class="r-info">
             <ul>
               <li class="clear-fix">
                 <span class="info-key">商品数量</span>
-                <span class="info-value">x<em>9</em></span>
+                <span class="info-value">x<em>{{settlementGoodsAmount}}</em></span>
               </li>
               <li class="clear-fix">
                 <span class="info-key">商品总额</span>
-                <span class="info-value">￥<em>9800</em></span>
+                <span class="info-value">￥<em>{{settlementGoodsTotalPrice}}</em></span>
               </li>
               <li class="clear-fix">
                 <span class="info-key">优惠金额</span>
-                <span class="info-value"><i style="font-style: normal;font-size: 20px;">-</i>&nbsp;&nbsp;￥<em>200</em></span>
+                <span class="info-value"><i style="font-style: normal;font-size: 20px;">-</i>&nbsp;&nbsp;￥<em>0</em></span>
               </li>
               <li class="clear-fix">
                 <span class="info-key">运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费</span>
-                <span class="info-value">￥<em>20</em></span>
+                <span class="info-value">￥<em>0</em></span>
               </li>
               <li class="clear-fix">
                 <span class="info-key">应付金额</span>
-                <span class="info-value">￥<em>9620</em></span>
+                <span class="info-value">￥<em>{{settlementGoodsTotalPrice}}</em></span>
               </li>
             </ul>
-            <div class="btn-pay">去支付</div>
+            <div class="btn-pay" @click="pay">去支付</div>
           </div>
         </div>
       </div>
@@ -119,63 +112,169 @@
 <script>
   import {autoVerticalCenter} from 'common/api/css'
   import {autoParentHeight} from "../../common/api/css"
+  import Address from 'common/components/address/address'
+  import AddressSelector from 'common/components/address-selector/addressSelector'
+  import dataHandle from 'common/api/data'
+  import {mapState} from 'vuex'
+  import store from '@/store'
+  import Vue from 'vue'
+  import axios from 'axios'
 
   export default {
-    data() {
-      return {
-        currentAddress: {
-          id: '0',
-          name: 'vince',
-          phone: '18000244654',
-          address: '江西省南昌市昌北经济技术开发区南天阳光小区31栋2单元312'
-        },
-        addressList: [
-          {
-            id: '0',
-            name: 'vince',
-            phone: '18000244654',
-            address: '江西省南昌市昌北经济技术开发区南天阳光小区31栋2单元312'
-          },
-          {
-            id: '1',
-            name: 'Deep David',
-            phone: '18052340021',
-            address: '江西省南昌市昌北经济技术开发区南天阳光小区31栋2单元312光小区31栋2单元312'
+    beforeRouteEnter(to, from, next) {
+      axios.get('http://localhost:8080/TTMall/checkLoginStatus', {withCredentials: true})
+        .then((res) => {
+          console.log("用户的登录状态：" + res.data.status)
+          // 将登录状态设置到session中
+          if (!res.data.status) {
+            store.commit('setUserInfo', null)
+            store.commit('setIsLogin', null)
+            // 终端当前导航，提示登录
+            Vue.prototype.$confirm('当前未登录，登录后才能访问，是否去登录？', '确认信息', {
+              distinguishCancelAndClose: true,
+              confirmButtonText: '确定',
+              cancelButtonText: '取消'
+            })
+              .then(() => {
+                next('/login')
+              })
+              .catch(action => {
+                next(false)
+              });
+          } else {
+            if (store.state.settlement === null) {
+              Vue.prototype.$message({
+                type: 'error',
+                message: '结算参数出错！'
+              })
+              next('/cart')
+            } else {
+              next()
+            }
           }
-        ],
-        goodsList: [
-          {
-            id: '0',
-            name: 'R15星云特别版 OPPO R15 全面屏双摄拍照手机 6G+128G 星云版 全网通 移动联通电信4G 双卡双待手机',
-            imgUrl: 'http://pccnvwbyj.bkt.clouddn.com/phone-3.png',
-            price: 1000,
-            count: 1
-          },
-          {
-            id: '1',
-            name: 'R15星云特别版 OPPO R15 全面屏双摄拍照手机 6G+128G 星云版 全网通 移动联通电信4G 双卡双待手机',
-            imgUrl: 'http://pccnvwbyj.bkt.clouddn.com/phone-2.png',
-            price: 2500,
-            count: 2
-          }
-        ]
-      }
+          sessionStorage.setItem("isLogin", JSON.stringify(res.data.status))
+        })
+        .catch((err) => {
+          store.commit('setUserInfo', null)
+          store.commit('setIsLogin', null)
+          console.log("请求异常！！！，请检查网络！")
+          // 终端当前导航，提示登录
+          Vue.prototype.$confirm('登录后才能访问，是否去登录？', '确认信息', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          })
+            .then(() => {
+              next('/login')
+            })
+            .catch(action => {
+              next(false)
+            });
+        })
     },
     mounted() {
-      autoVerticalCenter(this.$refs.goodsName, 80)
+      this.$nextTick(function () {
+        const liList = this.$refs.goodsList.children
+        console.log(liList)
+        for (let i = 0; i < liList.length; i++) {
+          autoVerticalCenter(liList[i], 110)
+        }
+      })
+    },
+    data() {
+      return {
+        selectedAddress: {},
+        editAddressStatus: false
+      }
     },
     methods: {
       selectAddress(id, event) {
         const e = event || window.event
         for (let i = 0; i < this.addressList.length; i++) {
           if (id === this.addressList[i].id) {
-            this.currentAddress = this.addressList[i]
+            this.selectedAddress = this.addressList[i]
           }
         }
       },
-      addAddress(){
-        let template ;
+      addAddress() {
+        this.$refs.addressContainer.style.height = '212px'
+        this.editAddressStatus = true
+      },
+      cancelAddAddress() {
+        this.$refs.addressContainer.style.height = '0'
+        this.editAddressStatus = false
+      },
+      addUserAddress() {
+        const address = this.$refs.address
+        console.log(address)
+        if (address.validateAddress()) {
+          axios.post('http://localhost:8080/TTMall/address', {
+            province: address.currentProvince,
+            city: address.currentCity,
+            county: address.currentCounty,
+            detail: address.detailAddress,
+            user_id: this.$store.state.user.id,
+            default_address: 1,
+            contact_name: address.userName,
+            contact_phone: address.userPhone,
+            create_time: dataHandle.dateFormat(new Date())
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '地址格式错误！',
+            duration: 2000
+          })
+        }
+      },
+      pay() {
+        if (!this.selectedAddress.id) {
+          this.$message({
+            type: 'error',
+            message: '未选择收货地址！'
+          })
+          return;
+        }
+        axios.post('http://localhost:8080/TTMall/orderHandle', {
+          address: this.selectedAddress,
+          orderGoods: this.$store.state.settlement,
+        },{withCredentials:true})
+          .then((res) => {
+            console.log(res)
+            if(res.data.status === true){
+              this.$router.push("/pay")
+            }else{
+              this.$message({
+                type:'error',
+                message: '结算失败！'
+              })
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$message({
+              type:'error',
+              message: '连接失败，请检查网络后重试！'
+            })
+          })
       }
+    },
+    computed: {
+      settlementGoodsList() {
+        return this.$store.getters.settlementGoodsList
+      },
+      settlementGoodsAmount() {
+        return this.$store.getters.settlementGoodsAmount
+      },
+      settlementGoodsTotalPrice() {
+        return this.$store.getters.settlementGoodsTotalPrice
+      },
+      addressList() {
+        return this.$store.state.address
+      }
+    },
+    components: {
+      Address, AddressSelector
     }
   }
 </script>
@@ -183,7 +282,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/css/variable.styl"
   goodsLiHeight = 80px
-  .pay
+  .settlement
     width: 100%
     padding: 40px 0
     font-family: 'LATO-REGULAR'
@@ -192,6 +291,7 @@
       margin: 0 auto
       margin-bottom: 20px
       background-color: #fff
+      box-shadow: 0 0 20px 0 #ddd
       .info-block
         padding: 40px
         color: #666
@@ -242,7 +342,7 @@
                 .address-phone
                   width: 50%
               .address-content
-                max-height: 45px
+                height: 45px
                 overflow: hidden
                 padding: 0 20px
                 font-size: 14px
@@ -285,6 +385,30 @@
                 font-size: 14px
             li:hover
               border-color: $theme_second_color
+          .select-address
+            height: 0
+            overflow: hidden
+            transition: all .3s
+            .address-btns
+              .address-btn
+                float: left
+                width: 80px
+                height: h = 32px
+                line-height: h
+                text-align: center
+                border-radius: 3px
+                font-size: 14px
+                cursor: pointer
+                color: #fff
+              .address-cancel
+                background-color: #ccc
+                margin-right: 30px
+                &:hover
+                  background-color: #bbb
+              .address-save
+                background-color: $theme_second_color
+                &:hover
+                  background-color: $theme_second_deep_color
         .block-body-goods-list
           ul
             li

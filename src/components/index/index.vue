@@ -71,10 +71,17 @@
     components: {
       MainNav,GoodsItem
     },
+    created(){
+    },
     data: function(){
       return {
         indexData: indexData,
         discountList: indexData.flashDealsList
+      }
+    },
+    computed:{
+      userHeadPortraitUrl(){
+        return this.$store.state.user.info.headPortraitUrl
       }
     }
   }

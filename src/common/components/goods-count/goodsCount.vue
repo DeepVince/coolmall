@@ -1,17 +1,24 @@
 <template>
   <div class="count" ref="outsideDiv" :style="{height:cssSet.myHeight+'px'}">
-    <span class="op subtraction select-none" @click="subtraction" ref="ops" :style="{width:cssSet.btWidth+'px'}">-</span><input type="text" value="1" v-model="value" @keyup="adjust" ref="inputArea" :style="{width:cssSet.inputWidth+'px'}"><span class="op add select-none" @click="add" ref="opa" :style="{width:cssSet.btWidth+'px'}">+</span>
+    <span class="op subtraction select-none"
+          @click="subtraction"
+          ref="ops"
+          :style="{width:cssSet.btWidth+'px'}">-</span><input type="text"
+                                                              value="1"
+                                                              v-model="count"
+                                                              @keyup="adjust"
+                                                              ref="inputArea" :style="{width:cssSet.inputWidth+'px'}"><span class="op add select-none" @click="add" ref="opa" :style="{width:cssSet.btWidth+'px'}">+</span>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['cWidth', 'cHeight', 'maxV', 'minV'],
+    props: ['cWidth', 'cHeight', 'maxV', 'minV','initCount'],
     data() {
       return {
-        value: 1,
         minValue: 1,
         maxValue: 10,
+        count: 0,
         cssSet:{
           myHeight: 30,
           btWidth: 30,
@@ -20,7 +27,7 @@
       }
     },
     created: function () {
-      this.value = this.minV || 1
+      this.count = this.initCount
       this.minValue = this.minV || 1
       this.maxValue = this.maxV || 10
 
@@ -33,32 +40,34 @@
     },
     methods: {
       adjust() {
-        if (/^[1-9][0-9]*[0-9]$/.test(this.value)) {
-          const val = parseInt(this.value)
+        if (/^[1-9][0-9]*[0-9]$/.test(this.count)) {
+          const val = parseInt(this.count)
           if (val > this.maxValue) {
-            this.value = this.maxValue
+            this.count = this.maxValue
           } else if (val < this.minValue) {
-            this.value = this.minValue
+            this.count = this.minValue
           } else {
-            this.value = val
+            this.count = val
           }
         } else {
-          this.value = 1
+          this.count = 1
         }
       },
       add() {
-        if (this.value < this.maxValue) {
-          this.value++
+        if (this.count < this.maxValue) {
+          this.count++
         } else {
-          this.value = this.maxValue
+          this.count = this.maxValue
         }
+        this.$emit('countChange',this.count)
       },
       subtraction() {
-        if (this.value > this.minValue) {
-          this.value--
+        if (this.count > this.minValue) {
+          this.count--
         } else {
-          this.value = this.minValue
+          this.count = this.minValue
         }
+        this.$emit('countChange',this.count)
       }
     }
   }

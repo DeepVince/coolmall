@@ -37,14 +37,14 @@
             </div>
           </div>
           <ul class="clear-fix goodsList">
-            <li v-for="goods in goodsList" @click="getGoodsDetail">
+            <li v-for="goods in goodsList" @click="getGoodsDetail(goods.id)">
               <div class="top-img">
-                <img :src="goods.imageUrl" alt="">
+                <img :src="goods.searchImageUrl" alt="">
               </div>
-              <div class="goods-price">￥{{goods.price}}</div>
+              <div class="goods-price">￥{{goods.price/100}}</div>
               <div class="goods-title">{{goods.title}}</div>
               <div class="goods-comments">
-                <span class="comments-count">{{goods.commentsCount}}</span>&nbsp;条评价
+                <span class="comments-count">{{goods.commentAmount}}</span>&nbsp;条评价
               </div>
               <div class="store">{{goods.storeName}}</div>
             </li>
@@ -61,8 +61,36 @@
 <script>
   import CrumbsNav from 'common/components/crumbsNav/crumbsNav'
   import Pagination from 'common/components/pagination/pagination'
+  import dataApi from 'common/api/data'
+  import {baseUrl} from "../../common/api/url"
+  import axios from "axios"
 
   export default {
+    beforeRouteEnter(to,from,next){
+      const keywords = to.params.id
+      axios.get(baseUrl+'/searchGoods?keywords='+keywords)
+        .then((res) => {
+          console.log(res)
+          next(vm => {
+            vm.goodsList = res.data
+          })
+        })
+        .catch((err) => {
+          next(false)
+        })
+    },
+    beforeRouteUpdate(to,from,next){
+      const keywords = to.params.id
+      axios.get(baseUrl+'/searchGoods?keywords='+keywords)
+        .then((res) => {
+          this.goodsList = res.data
+          next()
+        })
+        .catch((err) => {
+          next(false)
+        })
+    },
+    props:['id'],
     data() {
       return {
         searchResultOptions: [
@@ -84,7 +112,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-1.jpg'
           },
@@ -92,7 +120,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-2.png'
           },
@@ -100,7 +128,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-3.png'
           },
@@ -108,7 +136,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-4.png'
           },
@@ -116,7 +144,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-5.png'
           },
@@ -124,7 +152,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-1.jpg'
           },
@@ -132,7 +160,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-2.jpg'
           },
@@ -140,7 +168,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-3.jpg'
           },
@@ -148,7 +176,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-4.jpg'
           },
@@ -156,7 +184,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-5.jpg'
           },
@@ -164,7 +192,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-1.jpg'
           },
@@ -172,7 +200,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-2.png'
           },
@@ -180,7 +208,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-3.png'
           },
@@ -188,7 +216,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-4.png'
           },
@@ -196,7 +224,7 @@
             name: 'oppo r17',
             title: 'OPPO R17新品手机【6期免息】指纹水滴屏全网通8G+128G 双摄拍照手机 R15梦境升级版 流光蓝(8G+128G) 超值套装',
             price: '3599',
-            commentsCount: '9995',
+            evaluateCount: '9995',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR17-5.png'
           },
@@ -204,7 +232,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-1.jpg'
           },
@@ -212,7 +240,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-2.jpg'
           },
@@ -220,7 +248,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-3.jpg'
           },
@@ -228,7 +256,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-4.jpg'
           },
@@ -236,7 +264,7 @@
             name: 'oppo r15',
             title: '购R17享免息,下单送蓝牙音箱，9月17日起店铺将陆续对购买R17 6+128G的用户补发MH135耳机，详情咨询客服详情点击',
             price: '2709',
-            commentsCount: '8325',
+            evaluateCount: '8325',
             storeName: 'OPPO天天自营官方旗舰店',
             imageUrl: 'http://pccnvwbyj.bkt.clouddn.com/oppoR15-5.jpg'
           }
@@ -245,8 +273,9 @@
     },
     components: {CrumbsNav, Pagination},
     methods: {
-      getGoodsDetail(){
-        this.$router.push('/goodsDetail')
+      getGoodsDetail(id) {
+        this.$router.push('/goodsDetail/'+id);
+        dataApi.getData(baseUrl+'/searchGoods',[{key:'keywords',value:'oppo,小米'}])
       }
     }
   }

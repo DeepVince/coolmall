@@ -2,18 +2,18 @@
   <div class="comments-list">
     <div class="overview clear-fix">
       <div class="evaluation-block degree-of-satisfaction">
-        <h2><em>{{comments.wonderfulRate}}</em>%</h2>
+        <h2><em>{{compData.wonderfulRate}}</em>%</h2>
         <p>用户感到满意</p>
       </div>
       <div class="evaluation-block degree-of-highest-star">
-        <h2><em>{{comments.bestRate}}</em>%</h2>
+        <h2><em>{{compData.bestRate}}</em>%</h2>
         <p>最佳5星好评</p>
       </div>
       <div class="user-impression">
         <h2>大家印象</h2>
         <div class="impression-list">
           <ul class="clear-fix">
-            <li v-for="item in comments.impressions">{{item.text}}({{item.count}})</li>
+            <li v-for="item in compData.impressions">{{item.text}}({{item.count}})</li>
           </ul>
         </div>
       </div>
@@ -21,14 +21,14 @@
     <div class="comments">
       <div class="comment-tab">
         <ul class="clear-fix">
-          <li>全部({{comments.statistic.all}})</li>
-          <li>晒图({{comments.statistic.withPic}})</li>
-          <li>追评({{comments.statistic.addAfter}})</li>
+          <li>全部({{compData.statistic.all}})</li>
+          <li>晒图({{compData.statistic.withPic}})</li>
+          <li>追评({{compData.statistic.addAfter}})</li>
         </ul>
       </div>
       <div class="list-display">
         <ul>
-          <li v-for='aComment in comments.commentsList' :key='aComment.user.id' class="clear-fix">
+          <li v-for='aComment in compData.commentsList' :key='aComment.user.id' class="clear-fix">
             <div class="head-portrait clear-fix">
               <img :src="aComment.user.headPortraitUrl" alt="">
               <div class="name-ratings">
@@ -67,7 +67,6 @@
     props: {compData: Object},
     data() {
       return {
-        comments: this.compData
       }
     },
     methods: {

@@ -12,20 +12,22 @@
           <i class="iconfont icon-yanzhengma"></i>
         </label><input type="text" v-model="password" id="password" autocomplete="off" spellcheck="false" placeholder="验证码" @focus="activeInput(1)" @blur="blurInput(1)">
         <i class="clear-input-btn iconfont icon-close" v-show="password !== ''" @click="clearInput(1)"></i>
-        <span class="btn-send-message">获取验证码</span>
+        <span :class="['btn-send-message',{'btn-disabled':!canSendValidateCode}]" @click="validateCode" :disabled="canSendValidateCode">{{sendBtnText}}</span>
       </div>
       <p class="forget-password clear-fix">
         <span class="input-tips"><i class="iconfont icon-tishishuoming" v-show="inputTips !== ''"></i>{{inputTips}}</span>
         <span class="forget-text">收不到短信<i class="iconfont icon-feedback_fill"></i></span>
       </p>
       <div class="login-btn">
-        <span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+        <span @click="login">登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     data() {
       return {
@@ -33,7 +35,10 @@
         password: '',
         inputTips: '',
         activeOne: false,
-        activeTwo: false
+        activeTwo: false,
+        canSendValidateCode: true,
+        sendTimer: 60,
+        sendBtnText: '获取验证码'
       }
     },
     methods: {
@@ -46,6 +51,84 @@
       blurInput() {
         this.activeOne = false
         this.activeTwo = false
+      },
+      validatePhoneInput(){
+        const regPhone = /^[1-9]{1}[0-9]{10}$/
+        return this.account !== ''&& regPhone.test(this.account)
+      },
+      validatePassword(){
+        return this.password !== ''
+      },
+      validateCode() {
+        if(!this.validatePhoneInput()){
+          this.$message({
+            type: 'error',
+            message: '请填写正确的手机号',
+            showClose:true
+          })
+          return
+        }
+        if (this.canSendValidateCode) {
+          const that = this
+          that.canSendValidateCode = false
+          that.sendBtnText = "重新发送(" + that.sendTimer + "s)"
+          const timerOnce = setInterval(function () {
+            that.sendTimer--
+            that.sendBtnText = "重新发送(" + that.sendTimer + "s)"
+          }, 1000)
+          const timer = setTimeout(function () {
+            clearInterval(timerOnce)
+            that.sendBtnText = "获取验证码"
+            that.canSendValidateCode = true
+            that.sendTimer = 10
+          }, that.sendTimer * 1000)
+          axios.get('http://localhost:8080/TTMall/messageLogin?phone=' + this.account, {
+            withCredentials: true
+          })
+            .then((res) => {
+              if (res.data.status === true) {
+                console.log("验证码生成成功！")
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      },
+      login() {
+        if(!this.validatePhoneInput()){
+          this.$message({
+            type: 'error',
+            message: '请填写正确的手机号',
+            showClose:true
+          })
+          return
+        }
+        if(!this.validatePassword()){
+          this.$message({
+            type: 'error',
+            message: '验证码不能为空！',
+            showClose:true
+          })
+          return
+        }
+        axios.post('http://localhost:8080/TTMall/messageLogin?code=' + this.password + "&phone=" + this.account, {}, {
+          withCredentials: true
+        })
+          .then((res) => {
+            if (res.data.status === true) {
+              this.$router.push('/index')
+            }else{
+              this.$message({
+                type:'error',
+                message: '手机号或验证码错误',
+                showClose:true
+              })
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     }
   }
@@ -98,6 +181,10 @@
           font-size: 12px
         .btn-send-message:hover
           background-color: $theme_second_deep_color
+        .btn-disabled
+          background-color: #bbb !important
+          color: #eee !important
+          cursor: not-allowed
       .forget-password
         padding: 0 paddingSize
         font-size: 12px

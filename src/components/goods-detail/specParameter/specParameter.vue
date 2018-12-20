@@ -2,13 +2,13 @@
   <div class="spec-parameter">
     <div class="simple-props">
       <ul class="simple-props-list">
-        <li v-for="item in allParameters" :key='item.id' class="simple-props-item clear-fix">
-          <h2>{{item.nameZh}}</h2>
+        <li v-for="item in compData" :key='item.id' class="simple-props-item clear-fix">
+          <h2>{{item.cls}}</h2>
           <div class="detail-props">
             <ul class="detail-props-list">
-              <li v-for="prop in item.detailParameters" :key="prop.id" class="detail-props-item">
-                <span class="prop-key">{{prop.nameZh}}：</span>
-                <span class="prop-value">{{prop.value}}</span>
+              <li v-for="prop in item.props" :key="prop.id" class="detail-props-item">
+                <span class="prop-key">{{prop.displayName}}：</span>
+                <span class="prop-value">{{prop.propValue}}</span>
               </li>
               <li v-for='info in item.descInfo' :key='info.id' class="desc-info-list">
                 <span class="desc-info">{{info.content}}</span>
@@ -26,7 +26,6 @@
     props: {compData: Array},
     data() {
       return {
-        allParameters: this.compData
       }
     }
   }

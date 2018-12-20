@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <header-tips></header-tips>
     <header-search></header-search>
     <router-view/>
     <main-footer></main-footer>

@@ -1,6 +1,6 @@
 <template>
   <div class="image-text-info select-none">
-    <img v-for="item in picList" :key='item.id' :src="item.url" alt="">
+    <img v-for="item in compData" :key='item.id' :src="item.url" alt="">
   </div>
 </template>
 
@@ -9,7 +9,6 @@
     props: {compData: Array},
     data() {
       return {
-        picList: this.compData
       }
     }
   }
